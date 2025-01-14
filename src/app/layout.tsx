@@ -1,74 +1,31 @@
-import type { Metadata } from 'next';
-import { Prompt, Itim } from 'next/font/google';
-import "~/styles/globals.css";
+import type { Metadata } from 'next'
+import { IBM_Plex_Sans_Thai } from 'next/font/google'
+import '~/styles/globals.css';
 
-// Font configuration
-const prompt = Prompt({
-  weight: ['300', '400', '500', '600', '700'],
+// ตั้งค่า font
+const ibmPlexSansThai = IBM_Plex_Sans_Thai({
   subsets: ['thai', 'latin'],
-  display: 'swap',
-  variable: '--font-prompt',
-});
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
+  variable: '--font-ibm-plex-sans-thai',
+})
 
-const itim = Itim({
-  weight: ['400'],
-  subsets: ['thai', 'latin'],
-  display: 'swap',
-  variable: '--font-itim',
-});
-
-// Metadata configuration
+// Metadata สำหรับ SEO
 export const metadata: Metadata = {
-  title: 'ONSAT - ระบบชำระเงินออนไลน์ที่คุณไว้วางใจ',
-  description: 'ระบบรับเงินโดเนทอัจฉริยะ ที่สตรีมเมอร์ไว้วางใจ พร้อมระบบแจ้งเตือนอัตโนมัติ และรายงานสรุปที่ดูง่าย',
-  keywords: 'payment gateway, donation, streamer, online payment, Thailand',
-  authors: [{ name: 'ONSAT' }],
-  creator: 'ONSAT',
-  publisher: 'ONSAT',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  icons: {
-    icon: '/favicon.ico',
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
-};
+  title: 'View D Shop - แฟชั่นระดับพรีเมียม',
+  description: 'ค้นพบแฟชั่นระดับพรีเมียมที่คุณเข้าถึงได้ที่ View D Shop พร้อมบริการจัดส่งภายใน 24 ชั่วโมง',
+  keywords: 'แฟชั่น, เสื้อผ้า, พรีเมียม, ออนไลน์ช้อปปิ้ง, View D Shop',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html 
-      lang="th" 
-      className={`${prompt.variable} ${itim.variable}`}
-      suppressHydrationWarning
-    >
-      <body className={`
-        min-h-screen
-        font-[Prompt]
-        antialiased
-        bg-white
-        text-gray-900
-        selection:bg-[#40BFB4]/30
-        `}
-      >
+    <html lang="th" className={`${ibmPlexSansThai.variable}`}>
+      <body className={`font-body antialiased`}>
         {children}
-        
-        {/* Analytics Script (เพิ่มในอนาคต) */}
-        {process.env.NODE_ENV === 'production' && (
-          <>
-            {/* Google Analytics หรือ Script อื่นๆ */}
-          </>
-        )}
       </body>
     </html>
-  );
+  )
 }

@@ -1,215 +1,174 @@
-import React from "react";
-import { Menu, X, Check, ChevronRight } from "lucide-react";
+'use client'
 
-// Components would be imported from their respective files
-const Header = () => (
-  <header className="bg-white/90 border-gray-100 fixed left-0 right-0 top-0 z-50 border-b backdrop-blur-sm">
-    <nav className="container mx-auto flex items-center justify-between px-4 py-3">
-      <div className="flex items-center gap-2">
-        <img src="/logo.png" alt="Onsat Logo" className="h-10 w-10" />
-        <span className="text-2xl font-bold text-[#40BFB4]">ONSAT</span>
-      </div>
-      <div className="hidden items-center gap-8 md:flex">
-        <a href="#features" className="text-gray-600 hover:text-[#40BFB4]">
-          ฟีเจอร์
-        </a>
-        <a href="#pricing" className="text-gray-600 hover:text-[#40BFB4]">
-          ราคา
-        </a>
-        <a href="#faq" className="text-gray-600 hover:text-[#40BFB4]">
-          คำถามที่พบบ่อย
-        </a>
-        <button className="text-white rounded-full bg-[#40BFB4] px-6 py-2 transition hover:bg-[#3aa89e]">
-          เริ่มต้นใช้งาน
-        </button>
-      </div>
-      <button className="md:hidden">
-        <Menu className="text-gray-600 h-6 w-6" />
-      </button>
-    </nav>
-  </header>
-);
+import { useState, useEffect } from 'react'
+import { ArrowRight, ShoppingBag, Shield, Clock, Award } from 'lucide-react'
+import { motion } from 'framer-motion'
 
-const Hero = () => (
-  <section className="px-4 pb-16 pt-24">
-    <div className="container mx-auto">
-      <div className="text-center">
-        <h1 className="mb-6 font-[Itim] text-4xl font-bold md:text-5xl">
-          ระบบรับเงินโดเนทอัจฉริยะ
-          <br />
-          ที่สตรีมเมอร์ไว้วางใจ
-        </h1>
-        <p className="text-gray-600 mb-8 font-[Prompt] text-lg">
-          รับเงินโดเนทแบบเรียลไทม์ พร้อมระบบแจ้งเตือนอัตโนมัติ
-          และรายงานสรุปที่ดูง่าย ไม่พลาดทุกการสนับสนุน
-        </p>
-        <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <button className="text-white rounded-full bg-[#40BFB4] px-8 py-3 font-semibold transition hover:bg-[#3aa89e]">
-            ทดลองใช้ฟรี 30 วัน
-          </button>
-          <button className="hover:text-white rounded-full border border-[#40BFB4] px-8 py-3 font-semibold text-[#40BFB4] transition hover:bg-[#40BFB4]">
-            ดูแพ็กเกจทั้งหมด
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-);
+// Types
+interface FeatureCardProps {
+  icon: React.ReactNode
+  title: string
+  description: string
+}
 
-const Features = () => {
-  const features = [
-    {
-      title: "ครบทุกช่องทางการชำระเงิน",
-      description:
-        "รองรับการชำระเงินผ่านบัตรเครดิต QR Code และ e-Wallet ชั้นนำทุกค่าย",
-      icon: <Check className="h-6 w-6" />,
-    },
-    {
-      title: "ระบบอัตโนมัติ 100%",
-      description:
-        "ระบบทำงานอัตโนมัติตลอด 24 ชั่วโมง พร้อมแจ้งเตือนทันทีที่มีการโดเนท",
-      icon: <Check className="h-6 w-6" />,
-    },
-    {
-      title: "API พร้อมใช้งาน",
-      description:
-        "เชื่อมต่อกับระบบของคุณได้ง่ายๆ ด้วย API ที่เข้าใจง่ายและมีเอกสารประกอบครบถ้วน",
-      icon: <Check className="h-6 w-6" />,
-    },
-  ];
+// Animation variants
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+}
 
+// Components
+const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
   return (
-    <section id="features" className="bg-gray-50 py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center font-[Itim] text-3xl font-bold md:text-4xl">
-          ฟีเจอร์ครบครัน ที่สตรีมเมอร์ต้องการ
-        </h2>
-        <div className="grid gap-8 md:grid-cols-3">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl p-6 shadow-sm transition hover:shadow-md"
-            >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#40BFB4]/10">
-                <div className="text-[#40BFB4]">{feature.icon}</div>
-              </div>
-              <h3 className="mb-3 text-xl font-semibold">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
-            </div>
-          ))}
-        </div>
+    <motion.div 
+      className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+      whileHover={{ y: -5 }}
+      initial="hidden"
+      animate="visible"
+      variants={fadeIn}
+    >
+      <div className="mb-4">
+        {icon}
       </div>
-    </section>
-  );
-};
+      <h3 className="text-xl font-bold text-primary mb-2">{title}</h3>
+      <p className="text-text-secondary">{description}</p>
+    </motion.div>
+  )
+}
 
-const FAQ = () => {
-  const faqs = [
-    {
-      question: "ระบบมีความปลอดภัยอย่างไร?",
-      answer:
-        "เราใช้เทคโนโลยีการเข้ารหัสระดับสูง และได้รับการรับรองมาตรฐานความปลอดภัยสากล",
-    },
-    {
-      question: "ใช้เวลานานแค่ไหนในการรับเงิน?",
-      answer: "เงินจะเข้าบัญชีของคุณทันทีที่มีการโดเนท และสามารถถอนได้ทุกวัน",
-    },
-    {
-      question: "มีค่าธรรมเนียมเท่าไหร่?",
-      answer:
-        "ค่าธรรมเนียมเริ่มต้นที่ 2.5% ต่อรายการ ขึ้นอยู่กับแพ็กเกจที่เลือกใช้",
-    },
-  ];
+export default function Home() {
+  const [mounted, setMounted] = useState(false)
 
-  return (
-    <section id="faq" className="py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center font-[Itim] text-3xl font-bold md:text-4xl">
-          คำถามที่พบบ่อย
-        </h2>
-        <div className="mx-auto max-w-2xl">
-          {faqs.map((faq, index) => (
-            <div key={index} className="mb-6">
-              <h3 className="mb-2 text-xl font-semibold">{faq.question}</h3>
-              <p className="text-gray-600">{faq.answer}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-const Footer = () => (
-  <footer className="bg-gray-900 text-white py-12">
-    <div className="container mx-auto px-4">
-      <div className="grid gap-8 md:grid-cols-4">
-        <div>
-          <div className="mb-4 flex items-center gap-2">
-            <img src="/logo.png" alt="Onsat Logo" className="h-10 w-10" />
-            <span className="text-2xl font-bold">ONSAT</span>
-          </div>
-          <p className="text-gray-400">ระบบชำระเงินออนไลน์ที่คุณไว้วางใจ</p>
-        </div>
-        <div>
-          <h4 className="mb-4 font-semibold">ติดต่อเรา</h4>
-          <p className="text-gray-400 text-sm">
-            เลขที่ 25 อาคารอัลม่าลิงค์ ชั้น 17 ห้อง 351
-            <br />
-            ซอยชิดลม ถนนเพลินจิต แขวงลุมพินี
-            <br />
-            เขตปทุมวัน กรุงเทพฯ 10330
-          </p>
-        </div>
-        <div>
-          <h4 className="mb-4 font-semibold">ลิงก์ด่วน</h4>
-          <ul className="space-y-2">
-            <li>
-              <a href="#features" className="text-gray-400 hover:text-white">
-                ฟีเจอร์
-              </a>
-            </li>
-            <li>
-              <a href="#pricing" className="text-gray-400 hover:text-white">
-                ราคา
-              </a>
-            </li>
-            <li>
-              <a href="#faq" className="text-gray-400 hover:text-white">
-                คำถามที่พบบ่อย
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="mb-4 font-semibold">ติดตามเรา</h4>
-          <div className="flex gap-4">
-            <a href="#" className="text-gray-400 hover:text-white">
-              Facebook
-            </a>
-            <a href="#" className="text-gray-400 hover:text-white">
-              Twitter
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="border-gray-800 text-gray-400 mt-8 border-t pt-8 text-center">
-        <p>&copy; 2025 Onsat. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-);
+  if (!mounted) return null
 
-const Page = () => {
   return (
     <main className="min-h-screen">
-      <Header />
-      <Hero />
-      <Features />
-      <FAQ />
-      <Footer />
-    </main>
-  );
-};
+      {/* Navbar */}
+      <nav className="fixed top-0 w-full bg-white shadow-sm z-50">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <img src="/logo.png" alt="View D Shop" className="h-8" />
+          <div className="flex gap-6">
+            <button className="text-text-secondary hover:text-primary transition-colors">
+              คอลเลคชั่น
+            </button>
+            <button className="text-text-secondary hover:text-primary transition-colors">
+              โปรโมชั่น
+            </button>
+            <button className="text-text-secondary hover:text-primary transition-colors">
+              สมาชิก
+            </button>
+          </div>
+        </div>
+      </nav>
 
-export default Page;
+      {/* Hero Section */}
+      <motion.section 
+        className="pt-24 pb-16 px-4 bg-gradient-to-br from-secondary to-white"
+        initial="hidden"
+        animate="visible"
+        variants={fadeIn}
+      >
+        <div className="container mx-auto text-center">
+          <motion.h1 
+            className="text-4xl md:text-6xl font-bold text-primary mb-6"
+            variants={fadeIn}
+          >
+            แฟชั่นระดับพรีเมียม ที่คุณเข้าถึงได้
+          </motion.h1>
+          <motion.p 
+            className="text-xl text-text-secondary mb-8"
+            variants={fadeIn}
+          >
+            อัพเดทเทรนด์ล่าสุดจากแบรนด์ดัง พร้อมส่งตรงถึงคุณภายใน 24 ชั่วโมง
+          </motion.p>
+          <div className="flex justify-center gap-4">
+            <motion.button 
+              className="px-8 py-3 bg-primary text-white rounded-lg flex items-center gap-2 hover:bg-[#2A3B4D] transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              ช้อปเลย <ArrowRight size={20} />
+            </motion.button>
+            <motion.button 
+              className="px-8 py-3 border-2 border-primary text-primary rounded-lg hover:bg-secondary transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              ดูคอลเลคชั่นใหม่
+            </motion.button>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Features Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center text-primary mb-12">
+            สิทธิพิเศษสำหรับคุณ
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <FeatureCard 
+              icon={<ShoppingBag className="w-8 h-8 text-primary" />}
+              title="สินค้าพร้อมส่งทุกชิ้น"
+              description="ไม่ต้องรอพรีออเดอร์ จัดส่งทันทีที่สั่งซื้อ"
+            />
+            <FeatureCard 
+              icon={<Shield className="w-8 h-8 text-primary" />}
+              title="ระบบการชำระเงินที่ปลอดภัย"
+              description="รองรับทุกช่องทางการชำระเงิน พร้อมระบบความปลอดภัยระดับสากล"
+            />
+            <FeatureCard 
+              icon={<Clock className="w-8 h-8 text-primary" />}
+              title="บริการหลังการขาย 24/7"
+              description="ทีมงานพร้อมให้คำปรึกษาและช่วยเหลือตลอด 24 ชั่วโมง"
+            />
+            <FeatureCard 
+              icon={<Award className="w-8 h-8 text-primary" />}
+              title="สะสมแต้มแลกส่วนลด"
+              description="ยิ่งช้อป ยิ่งคุ้ม ด้วยระบบสะสมแต้มสุดพิเศษ"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-primary text-white py-12">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4">View D Shop</h3>
+              <p className="text-gray-300 text-sm">
+                เลขที่ 25 อาคารอัลม่าลิงค์ ชั้น 17 ห้อง 352
+                <br />ซอยชิดลม ถนนเพลินจิต แขวงลุมพินี
+                <br />เขตปทุมวัน กรุงเทพฯ 10330
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4">ลิงก์ด่วน</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-300 hover:text-white transition-colors">เกี่ยวกับเรา</a></li>
+                <li><a href="#" className="text-gray-300 hover:text-white transition-colors">นโยบายความเป็นส่วนตัว</a></li>
+                <li><a href="#" className="text-gray-300 hover:text-white transition-colors">เงื่อนไขการใช้บริการ</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold mb-4">ติดตามเรา</h3>
+              <div className="flex gap-4">
+                <a href="#" className="text-gray-300 hover:text-white transition-colors">Facebook</a>
+                <a href="#" className="text-gray-300 hover:text-white transition-colors">Instagram</a>
+                <a href="#" className="text-gray-300 hover:text-white transition-colors">Line</a>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
+            <p>&copy; 2025 View D Shop. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </main>
+  )
+}
