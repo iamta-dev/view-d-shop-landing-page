@@ -50,7 +50,7 @@ export default function Home() {
       {/* Navbar */}
       <nav className="fixed top-0 w-full bg-white shadow-sm z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <img src="/logo.png" alt="View D Shop" className="h-8" />
+          <img src="/logo.png" alt="View D Shop" className="h-16" />
           <div className="flex gap-6">
             <button className="text-text-secondary hover:text-primary transition-colors">
               คอลเลคชั่น
@@ -67,7 +67,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <motion.section 
-        className="pt-24 pb-16 px-4 bg-gradient-to-br from-secondary to-white"
+        className="pt-36 pb-16 px-4 bg-gradient-to-br from-secondary to-white"
         initial="hidden"
         animate="visible"
         variants={fadeIn}
